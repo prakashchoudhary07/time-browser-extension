@@ -39,67 +39,7 @@ jobs:
     name: Submit (Chrome)
     runs-on: ubuntu-latest
     timeout-minutes: 2
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          name: ${{ env.ZIP_NAME }}
-      - name: Upload extension to webstore
-        run: npx chrome-webstore-upload-cli upload --source ${{ env.ZIP_NAME }}
-        env:
-          EXTENSION_ID: ${{ secrets.EXTENSION_ID }}
-          CLIENT_ID: ${{ secrets.CLIENT_ID }}
-          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-          REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}
-      # - name: Create GitHub Release
-      # if: startsWith(github.ref, 'refs/tags/')
-      # env:
-      #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      # run: |
-      #   gh release create ${{ github.ref_name }} \
-      #     --generate-notes \
-      #     --title "Release ${{ github.ref_name }}" \
-      #     ${{ env.ZIP_NAME }}
-name: Release Chrome Extension
-
-on:
-  push:
-    branches:
-      - main
-      - feat/auto-deploy-chrome-extension
-      - develop
-    tags:
-      - "v*"
-  workflow_dispatch:
-
-env:
-  ZIP_NAME: "extension-${{ github.sha }}.zip"
-
-jobs:
-  build-and-zip:
-    runs-on: ubuntu-latest
-    timeout-minutes: 3
-    strategy:
-      matrix:
-        node-version: [18]
-    steps:
-      - uses: actions/checkout@v4
-      - name: Create ZIP file
-        run: |
-          zip -r ${{ env.ZIP_NAME }} .
-          # gh release create "$DAILY_VERSION" --generate-notes
-      - name: Debug - List created ZIP file
-        run: ls -l *.zip
-      - name: Upload ZIP as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ env.ZIP_NAME }}
-          path: ${{ env.ZIP_NAME }}
-          retention-days: 7
-  chrome-release:
-    needs: [build-and-zip]
-    name: Submit (Chrome)
-    runs-on: ubuntu-latest
-    timeout-minutes: 2
+    environment: "production"
     steps:
       - uses: actions/download-artifact@v4
         with:
