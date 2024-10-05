@@ -51,12 +51,12 @@ jobs:
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
           REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}
-      # - name: Create GitHub Release
-      # if: startsWith(github.ref, 'refs/tags/')
-      # env:
-      #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      # run: |
-      #   gh release create ${{ github.ref_name }} \
-      #     --generate-notes \
-      #     --title "Release ${{ github.ref_name }}" \
-      #     ${{ env.ZIP_NAME }}
+      - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+            gh release create ${{ github.ref_name }} \
+            --generate-notes \
+            --title "Release ${{ github.ref_name }}" \
+            ${{ env.ZIP_NAME }}
