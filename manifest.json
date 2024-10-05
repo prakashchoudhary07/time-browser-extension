@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Time Extensions",
   "description": "Base Level Extension",
-  "version": "0.0.0.3",
+  "version": "0.0.0.4",
   "icons": {
     "16": "time_extensions-16.png",
     "128": "time_extensions-128.png"
